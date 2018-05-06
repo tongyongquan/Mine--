@@ -1,0 +1,19 @@
+.form-container {
+    width: 300px;
+    margin: 0 auto;;
+}
+
+.page-title {
+    text-align: center;
+}
+
+.info {
+    display: inline-block;
+    width: 60%;
+    margin-left: 10px;
+}
+
+.label-btn {
+    margin-left:45px;
+
+}

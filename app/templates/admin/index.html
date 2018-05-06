@@ -1,0 +1,70 @@
+{% extends 'admin/base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block title %}
+    首页
+{% endblock %}
+{% block main %}
+      <div class="box ">
+        <div class="box-header with-border">
+            <h3 class="box-title">最近添加:</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example2" class="table table-hover table-striped">
+                {#       table table-bordered table-hover#}
+                <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>简介</th>
+                    <th>作者</th>
+                    <th>创建时间</th>
+                    <th>修改</th>
+                    <th>删除</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                    {% for article in  articles %}
+                        <tr>
+                        <td>
+                            <a href="{{ url_for('admin.article',article_id=article.id) }}">{{ article.title }}</a>
+                        </td>
+
+                        <td>{{ article.info }}</td>
+                        <td>{{ article.author.username }}</td>
+                        <td> {{ article.create_time }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.article_edit',article_id=article.id) }}"><i
+                                    class="fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.article_delete',article_id=article.id) }}">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+                {#            <tfoot>#}
+                {#             <tr>#}
+                {#                <th>标题</th>#}
+                {#                <th>简介</th>#}
+                {#                <th>作者</th>#}
+                {#                <th>创建时间</th>#}
+                {#                <th>操作</th>#}
+                {#            </tr>#}
+                {#            </tfoot>#}
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+
+{% endblock %}

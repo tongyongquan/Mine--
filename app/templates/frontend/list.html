@@ -1,0 +1,221 @@
+{% extends 'frontend/base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block title %}
+    {{ label_name }}
+{% endblock %}
+
+{% block main %}
+
+        <div class="layui-row layui-col-space10">
+        <div class="layui-col-md9 ">
+            {% for article in  articles %}
+                <div class="article-list layui-collapse layui-panel layui-article animated fadeInUp">
+                    <div class="layui-colla-item">
+                        <div class="layui-colla-content layui-show layui-article">
+                            <fieldset
+                                    class="layui-elem-field layui-field-title">
+                                <legend class="center-to-head"><span
+                                        class="layui-badge layui-bg-green"> {{ article.label.name }}</span>
+                                    <a href="{{ url_for('frontend.article',article_id=article.id) }}">{{ article.title }}</a>
+                                </legend>
+                                <div class="layui-field-box has-pic">
+                                    <div class="layui-row layui-col-space10">
+                                        <div class="layui-col-lg10 layui-col-md10 layui-col-sm10 layui-col-xs12">
+                                            {{ article.info }}<a
+                                                class="loading"
+                                                href="{{ url_for('frontend.article',article_id=article.id) }}">...更多>><i
+                                                class="fa fa-angle-double-right"></i>
+                                        </a>
+                                        </div>
+                                        <div class="layui-col-lg2 layui-col-md2 layui-col-sm2">
+                                            <img src="/upload/img/03a782b103204677a19a12df03ce06b5.png"
+                                                 class="panel-pic"></div>
+                                    </div>
+                                </div>
+                                <div class="operation">
+                                    <div class="tags"><span
+                                            class="layui-badge-rim"
+                                            onclick="searchTag(this)"><i
+                                            class="fa fa-tag"></i> noteblog</span>
+                                        <span
+                                                class="layui-badge-rim"
+                                                onclick="searchTag(this)"><i
+                                                class="fa fa-tag"></i> 博客</span>
+                                        <span
+                                                class="layui-badge-rim"
+                                                onclick="searchTag(this)"><i
+                                                class="fa fa-tag"></i> java博客</span>
+                                        <span
+                                                class="layui-badge-rim"
+                                                onclick="searchTag(this)"><i
+                                                class="fa fa-tag"></i> 开源</span>
+                                    </div>
+                                    <div class="info"><span class="views"><i
+                                            class="fa fa-thermometer-half"></i> 1167<code
+                                            style="font-family: cursive;">℃</code></span>
+                                        <span class="datetime"><i
+                                                class="fa fa-bullhorn"></i> {{ article.create_time }}</span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+        <div class="layui-col-md3">
+            <div id="affix-side"
+                 style="position: static; left: auto; width: 227.5px;">
+                <div class="layui-tab layui-tab-card">
+                    <ul class="layui-tab-title select-none">
+                        <li class="layui-this">网站信息</li>
+                        <li class="">会员中心</li> <!----></ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show layui-text">
+                            <ul>
+                                <li>网站名称：BMY's Note</li>
+                                <li>博客系统：<a
+                                        href="https://github.com/miyakowork/NoteBlog"
+                                        target="_blank"
+                                        style="font-style: italic;"><i
+                                        class="fa fa-graduation-cap"></i>NoteBlog</a>&nbsp;©
+                                </li>
+                                <li><b style="color:#000;">QQ群</b>・留言：<a
+                                        target="_blank"
+                                        href="//shang.qq.com/wpa/qunwpa?idkey=6038ff36576f69325a84260aaacde20ad945c31f06f8365897589f8484fc43ea"><i
+                                        class="fa fa-qq"></i></a>・<a
+                                        href="/message"><i
+                                        class="fa fa-comment-o"></i></a></li>
+                                <li>前端UI：<a href="//layui.com" target="_blank">layui
+                                    2.2.5</a></li>
+                                <li>后端架构：<a
+                                        href="https://projects.spring.io/spring-boot/">Spring
+                                    Boot</a> 1.5.10 系列等
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="layui-tab-item"><p
+                                style="text-align: center;"><a
+                                href="/api/qq"
+                                class="layui-btn layui-btn-sm layui-btn-primary"><i
+                                class="fa fa-qq"></i> 网站用户 </a> <a href="/login"
+                                                                   class="layui-btn layui-btn-sm layui-btn-primary"><i
+                                class="fa fa-user-o"></i> 网站管理</a></p> <!---->
+                        </div>
+                        <!----></div>
+                </div>
+                <div id="search-panel" class="layui-tab layui-tab-card">
+                    <div class="layui-tab-content select-none">
+                        <p class="title">搜索库
+                            <small style="float: right;"><a href="/search"
+                                                            target="_blank"><i>前往
+                                <i
+                                        class="fa fa-angle-double-right"></i></i></a>
+                            </small>
+                        </p>
+                        <hr>
+                        <input name="words" placeholder="键入Enter键以搜索"
+                               autocomplete="off"
+                               class="layui-input search-box"></div>
+                </div>
+                <div class="layui-tab layui-tab-card layui-article-cate">
+                    <div class="layui-tab-content select-none"><p class="title">
+                        分类堆</p>
+                        <hr>
+                        <p><a href="/index?c=1"><i class="layui-icon"></i>
+                            WEB前端</a>
+                        </p>
+                        <p><a href="/index?c=2"><i class="layui-icon"></i> JAVA</a>
+                        </p>
+                        <p><a href="/index?c=3"><i class="layui-icon"></i> 数据库</a>
+                        </p>
+                        <p><a href="/index?c=4"><i class="layui-icon"></i> 操作系统</a>
+                        </p>
+                        <p><a href="/index?c=5"><i class="layui-icon"></i>
+                            Spring</a>
+                        </p>
+                        <p><a href="/index?c=6"><i class="layui-icon"></i> 服务器</a>
+                        </p>
+                        <p><a href="/index?c=7"><i class="layui-icon"></i> 爬虫技术</a>
+                        </p>
+                        <p><a href="/index?c=8"><i class="layui-icon"></i>
+                            Spring Cloud</a>
+                        </p>
+                        <p><a href="/index?c=9"><i class="layui-icon"></i>
+                            Spring Boot</a>
+                        </p></div>
+                </div>
+                <div class="layui-tab layui-tab-card layui-master-recommend">
+                    <div class="layui-tab-content select-none"><p class="title">
+                        博文栈</p>
+                        <hr>
+                        <p><a href="/article/1524191671">SpringBoot内嵌Tomcat临时上传文件目录被意外删除导致异常</a>
+                        </p>
+                        <p>
+                            <a href="/article/1518855538">实战JAVA8（一）：函数式数据处理之stream的使用（2）</a>
+                        </p>
+                        <p>
+                            <a href="/article/1439515583">百度编辑器(UEditor)Ver1.4在线图片管理BUG修复</a>
+                        </p>
+                        <p><a href="/article/1524560671">MySQL优化之explain的用法以及值的含义</a>
+                        </p>
+                        <p>
+                            <a href="/article/1518841154">实战JAVA8（一）：函数式数据处理之stream的使用（1）</a>
+                        </p>
+                        <p>
+                            <a href="/article/1518690353">处理在IOS端微信webview中无法修改title的情况</a>
+                        </p>
+                        <p><a href="/article/1519446453">浅析类 ThreadLocal 的使用</a>
+                        </p>
+                        <p><a href="/article/1439544586">自定义EL表达式</a></p>
+                        <p><a href="/article/1518701215">SQL注意的一些开发/优化规范</a></p>
+                        <p><a href="/article/1518700405">Bootstrap-table插件data-sort-name启用server排序无效的解决办法</a>
+                        </p></div>
+                </div>
+                <div class="layui-tab layui-tab-card layui-tags">
+                    <div class="layui-tab-content select-none"><p class="title">
+                        标签页</p>
+                        <hr>
+                        <span class="layui-badge-rim">mysql (5)</span><span
+                                class="layui-badge-rim">spring (4)</span><span
+                                class="layui-badge-rim">linux (4)</span><span
+                                class="layui-badge-rim">java8 (3)</span><span
+                                class="layui-badge-rim">优化 (2)</span><span
+                                class="layui-badge-rim">mongodb (2)</span><span
+                                class="layui-badge-rim">el表达式 (2)</span><span
+                                class="layui-badge-rim">web (2)</span><span
+                                class="layui-badge-rim">sql (2)</span><span
+                                class="layui-badge-rim">centos (2)</span><span
+                                class="layui-badge-rim">百度编辑器 (2)</span><span
+                                class="layui-badge-rim">ios (2)</span><span
+                                class="layui-badge-rim">tomcat (2)</span><span
+                                class="layui-badge-rim">springboot (2)</span><span
+                                class="layui-badge-rim">UEditor (2)</span><span
+                                class="layui-badge-rim">jsp (2)</span><span
+                                class="layui-badge-rim">winpe (1)</span><span
+                                class="layui-badge-rim">jdk (1)</span><span
+                                class="layui-badge-rim">护眼色 (1)</span><span
+                                class="layui-badge-rim">flatmap (1)</span><span
+                                class="layui-badge-rim">jdbctemplate (1)</span><span
+                                class="layui-badge-rim">约束条件 (1)</span><span
+                                class="layui-badge-rim">选择 (1)</span><span
+                                class="layui-badge-rim">微信 (1)</span><span
+                                class="layui-badge-rim">jquery (1)</span><span
+                                class="layui-badge-rim">sql语句 (1)</span><span
+                                class="layui-badge-rim">select (1)</span><span
+                                class="layui-badge-rim">ss (1)</span><span
+                                class="layui-badge-rim">validation (1)</span><span
+                                class="layui-badge-rim">cglib (1)</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
